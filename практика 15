@@ -155,4 +155,3 @@ while True:
     step_total += step
 turtle.write(f"Всего сделано {step_total} шагов")
 turtle.done()
-
