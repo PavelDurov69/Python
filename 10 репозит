@@ -1,0 +1,157 @@
+### Задание 1
+import os
+
+class GameLauncher:
+    def __init__(self, name, path):
+        self.name = name
+        self.path = path
+
+    def run(self):
+        if os.path.exists(self.path):
+            print(f"Игра {self.name} успешно запущена с пути: {self.path}")
+        else:
+            print(f"Ошибка: Игра {self.name} не запущена. Путь {self.path} не найден.")
+
+minecraft = GameLauncher("Minecraft", r"C:\Games\Minecraft\MinecraftLauncher.exe")
+gta5 = GameLauncher("GTA V", r"D:\Rockstar Games\GTA V\GTA5.exe")
+genshin = GameLauncher("Genshin Impact", r"C:\Games\Genshin Impact\GenshinImpact.exe")
+
+minecraft.run()
+gta5.run()
+genshin.run()
+
+
+### Задание 2
+class File:
+    def __init__(self, filename, size):
+        self.filename = filename
+        self.size = size
+
+    def open(self):
+        print(f"Открытие файла {self.filename}")
+
+    def info(self):
+        return f"Имя: {self.filename}, размер: {self.size} кб"
+
+class TextFile(File):
+    def __init__(self, filename, size, encoding):
+        super().__init__(filename, size)
+        self.encoding = encoding
+
+    def open(self):
+        print(f"Открытие текстового файла {self.filename} с кодировкой {self.encoding}")
+
+class ImageFile(File):
+    def __init__(self, filename, size, resolution):
+        super().__init__(filename, size)
+        self.resolution = resolution
+
+    def open(self):
+        print(f"Открытие изображения {self.filename} с разрешением {self.resolution}")
+
+text_file = TextFile("doc.txt", 177, "utf-8")
+image_file = ImageFile("photo.jpg", 2500, "1200x1900")
+
+text_file.open()
+image_file.open()
+
+print(text_file.info())
+print(image_file.info())
+
+
+### Задание 3
+class Racing_Car:
+    def __init__(self, brand, model, color, number):
+        self.brand = brand
+        self.model = model
+        self.color = color
+        self.number = number
+
+    def info_car(self):
+        print(f"Участник №{self.number}\nАвтомобиль: {self.color} {self.brand} {self.model}")
+
+class Race:
+    def __init__(self, name_race):
+        self.name_race = name_race
+        self.__race_participants = []
+
+    def append_participants(self, *cars):
+        self.__race_participants.extend(cars)
+
+    def __print_participants(self):
+        print("Участники гонки:")
+        for car in self.__race_participants:
+            print(f"№{car.number} {car.brand} {car.model}")
+
+    def start_race(self):
+        print(f"{self.name_race} скоро старт!")
+        self.__print_participants()
+        print("Гонка началась.")
+
+car_1 = Racing_Car("Mitsubishi", "Lancer Evolution IX ", "жёлтый", 28)
+car_1.info_car()
+
+car_2 = Racing_Car("Porsche", "911", "чёрный", 14)
+car_2.info_car()
+
+race_1 = Race("мкад")
+race_1.append_participants(car_1, car_2)
+race_1.start_race()
+
+
+### Задание 4
+class MusicFile:
+    def play(self):
+        print("Воспроизведение аудио файла...")
+
+class MP3File(MusicFile):
+    def play(self):
+        print("Воспроизведение MP3 файла")
+
+class WAVFile(MusicFile):
+    def play(self):
+        print("Воспроизведение WAV файла")
+
+class FLACFile(MusicFile):
+    def play(self):
+        print("Воспроизведение FLAC файла")
+
+def play_music(files: list):
+    for file in files:
+        file.play()
+
+# Тестирование
+files = [MP3File(), WAVFile(), FLACFile()]
+play_music(files)
+
+### Задание 5
+`python
+from abc import ABC, abstractmethod
+
+class Vehicle(ABC):
+    @abstractmethod
+    def move(self):
+        pass
+
+    @abstractmethod
+    def fuel_type(self):
+        pass
+
+class Car(Vehicle):
+    def move(self):
+        return "Автомобиль едет по дороге"
+
+    def fuel_type(self):
+        return "Бензин"
+
+class Boat(Vehicle):
+    def move(self):
+        return "Лодка плывёт по воде"
+
+    def fuel_type(self):
+        return "Дизель"
+
+def test_transport(vehicles: list):
+    for vehicle in vehicles:
+        print(vehicle.move())
+        print(f"Тип топлива: {vehicle.fuel_type()}\n")
